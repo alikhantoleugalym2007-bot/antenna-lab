@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Антеннаның бұрыштық ажыратуы · Антенна зертханасы</title>
+  <meta name="description" content="Интерактивті физика зертханасы: параболалық антеннаның бұрыштық ажыратуы, θ ≈ 1,22 λ/D. / Интерактивная лаборатория: угловое разрешение параболической антенны.">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Антеннаның бұрыштық ажыратуы">
+  <meta property="og:description" content="Антенна қаншалықты өткір көреді? Интерактивті тәжірибе · Интерактивный эксперимент.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Inter+Tight:wght@600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== Навигация ===== -->
+  <nav class="nav" aria-label="Бөлімдер">
+    <div class="brand"><i aria-hidden="true"></i><span data-i="brand"></span></div>
+    <div class="nav-links">
+      <a href="#tusindirme" data-i="nav1"></a>
+      <a href="#zerthana" data-i="nav2"></a>
+      <a href="#formulalar" data-i="nav3"></a>
+      <a href="#mysal" data-i="nav4"></a>
+      <a href="#qorytyndy" data-i="nav5"></a>
+    </div>
+    <div class="lang" role="group" aria-label="Тіл / Язык">
+      <button type="button" id="lang-kk" aria-pressed="true">ҚАЗ</button>
+      <button type="button" id="lang-ru" aria-pressed="false">РУС</button>
+    </div>
+  </nav>
+
+  <!-- ===== 1. Главный экран ===== -->
+  <header class="hero">
+    <div class="hero-meta">
+      <p data-h="meta1"></p>
+      <p data-h="meta2"></p>
+    </div>
+    <div class="hero-main">
+      <h1 data-i="heroTitle"></h1>
+      <div class="lens-wrap">
+        <canvas class="lens" id="heroCanvas" role="img" aria-label="Airy"></canvas>
+        <div class="lens-readout"><span>Δ / θ = <b id="heroRatio">1,00</b></span><b id="heroState"></b></div>
+      </div>
+    </div>
+    <p class="hero-q" data-h="heroQ"></p>
+    <div class="hero-actions">
+      <a class="go" href="#zerthana"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span data-i="heroCta"></span></a>
+      <button class="go alt" type="button" data-action="demo"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor"/></svg></i><span data-i="demoBtn"></span></button>
+      <p class="answer" data-h="answer"></p>
+    </div>
+  </header>
+
+  <!-- ===== 2. Простое объяснение ===== -->
+  <section class="sec" id="tusindirme">
+    <div class="sec-no"><span>01</span><b data-i="n1"></b></div>
+    <div class="sec-main">
+      <div class="sec-head">
+        <h2 data-i="exTitle"></h2>
+        <p class="lede" data-i="exLede"></p>
+      </div>
+      <ol class="steps">
+        <li><span class="n" aria-hidden="true">1</span><h3 data-i="ex1t"></h3><p data-i="ex1p"></p></li>
+        <li><span class="n" aria-hidden="true">2</span><h3 data-i="ex2t"></h3><p data-i="ex2p"></p></li>
+        <li><span class="n" aria-hidden="true">3</span><h3 data-i="ex3t"></h3><p data-h="ex3p"></p></li>
+      </ol>
+      <p class="remember" data-h="exRemember"></p>
+    </div>
+  </section>
+
+  <!-- ===== 3. Интерактивная симуляция ===== -->
+  <section class="sec" id="zerthana">
+    <div class="sec-no"><span>02</span><b data-i="n2"></b></div>
+    <div class="sec-main">
+      <div class="sec-head">
+        <h2 data-i="labTitle"></h2>
+        <p class="lede" data-i="labLede"></p>
+      </div>
+      <p class="caption" id="caption" aria-live="polite"></p>
+
+      <div class="frame lab">
+        <!-- Что видит антенна -->
+        <div class="lab-view">
+          <span class="label" data-i="skyTitle"></span>
+          <canvas class="lens" id="sky" role="img" aria-label="Airy"></canvas>
+          <div class="verdict" id="verdict" data-state="limit" aria-live="polite">
+            <strong id="verdictTitle"></strong>
+            <span id="verdictSub"></span>
+          </div>
+          <p class="hint" data-i="skyHint"></p>
+        </div>
+
+        <!-- Ползунки и результат -->
+        <div class="lab-side">
+          <div class="control">
+            <div class="control-top"><label for="inF" data-i="cF"></label><output id="outF" for="inF"></output></div>
+            <input type="range" id="inF" min="1" max="12" step="0.1" value="3">
+            <small data-i="cFh"></small>
+          </div>
+          <div class="control">
+            <div class="control-top"><label for="inD" data-i="cD"></label><output id="outD" for="inD"></output></div>
+            <input type="range" id="inD" min="0.3" max="3" step="0.05" value="0.8">
+            <small data-i="cDh"></small>
+          </div>
+          <div class="control">
+            <div class="control-top"><label for="inSep" data-i="cS"></label><output id="outSep" for="inSep"></output></div>
+            <input type="range" id="inSep" min="0" max="30" step="0.05" value="8.75">
+            <small data-i="cSh"></small>
+          </div>
+          <dl class="results">
+            <div><dt data-i="rLam"></dt><dd id="valLam"></dd></div>
+            <div class="main"><dt data-i="rTheta"></dt><dd id="valTheta"></dd></div>
+          </dl>
+          <p class="hint" id="warnAngle" hidden data-i="warnAngle"></p>
+          <div class="lab-actions">
+            <button class="go alt" type="button" data-action="reset"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span data-i="resetBtn"></span></button>
+            <button class="go" type="button" data-action="demo"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor"/></svg></i><span data-i="demoBtn"></span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div class="frame">
+          <div class="frame-head"><span class="label" data-i="schemeTitle"></span></div>
+          <canvas class="plot" id="scheme" role="img" aria-label="scheme"></canvas>
+          <p class="note" id="schemeNote"></p>
+        </div>
+        <div class="frame">
+          <div class="frame-head"><span class="label" data-i="graphTitle"></span></div>
+          <canvas class="plot" id="graph" role="img" aria-label="graph"></canvas>
+          <p class="note" data-i="graphNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. Формулы ===== -->
+  <section class="sec" id="formulalar">
+    <div class="sec-no"><span>03</span><b data-i="n3"></b></div>
+    <div class="sec-main">
+      <div class="sec-head">
+        <h2 data-i="fTitle"></h2>
+        <p class="lede" data-i="fLede"></p>
+      </div>
+      <div class="laws">
+        <article class="frame law">
+          <div class="law-eq"><var>λ</var> = <span class="frac"><span><var>c</var></span><span><var>f</var></span></span></div>
+          <ul class="vars" data-h="f1v"></ul>
+          <p class="in-sim"><b data-i="inSim"></b><span data-i="f1s"></span></p>
+        </article>
+        <article class="frame law">
+          <div class="law-eq"><var>θ</var> ≈ 1,22 <span class="frac"><span><var>λ</var></span><span><var>D</var></span></span></div>
+          <ul class="vars" data-h="f2v"></ul>
+          <p class="in-sim"><b data-i="inSim"></b><span data-i="f2s"></span></p>
+        </article>
+      </div>
+      <div class="frame calc">
+        <div class="frame-head"><span class="label" data-i="calcTitle"></span></div>
+        <ol id="calcSteps"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. Пример из жизни ===== -->
+  <section class="sec" id="mysal">
+    <div class="sec-no"><span>04</span><b data-i="n4"></b></div>
+    <div class="sec-main">
+      <div class="sec-head"><h2 data-i="mTitle"></h2></div>
+      <div class="example">
+        <div class="example-text">
+          <p data-h="m1"></p>
+          <p data-i="m2"></p>
+          <div><button class="go alt" type="button" id="btnSatellite"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M8.5 3.5 13 8l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span data-i="mBtn"></span></button></div>
+        </div>
+        <div class="beams" id="beams"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. Вывод ===== -->
+  <section class="sec" id="qorytyndy">
+    <div class="sec-no"><span>05</span><b data-i="n5"></b></div>
+    <div class="sec-main">
+      <div class="sec-head">
+        <h2 data-i="qTitle"></h2>
+        <p class="lede" data-i="qLede"></p>
+      </div>
+      <div class="speech">
+        <p data-h="q1"></p>
+        <p data-h="q2"></p>
+        <p data-h="q3"></p>
+      </div>
+      <p class="hint" data-i="qLimit"></p>
+      <div class="final">
+        <button class="go alt" type="button" data-action="reset" data-scroll="1"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span data-i="resetBtn"></span></button>
+        <button class="go" type="button" data-action="demo"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor"/></svg></i><span data-i="demoBtn"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <footer data-i="foot"></footer>
+</div>
+
+  <noscript><p style="padding:24px;color:#f3f3f0">Бұл зертхана JavaScript-пен жұмыс істейді. / Для работы лаборатории нужен JavaScript.</p></noscript>
+  <script src="js/main.js"></script>
+</body>
+</html>
